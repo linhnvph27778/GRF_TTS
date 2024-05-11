@@ -5,113 +5,189 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+// import React from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import {} from 'react-native/Libraries/NewAppScreen';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const [showPassword, setShowPassword] = useState(false);
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
+  const [emailOrPhone, setEmailOrPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [verificationCode, setVerificationCode] = useState('');
 
+  const handleRegister = () => {
+    if (!emailOrPhone || !password || !confirmPassword || !verificationCode) {
+      Alert.alert('Thông báo', 'Điền đầy đủ thông tin');
+      return;
+    }
+    if (password !== confirmPassword) {
+      Alert.alert('Thông báo', 'Nhập lại mật khẩu');
+      return;
+    }
+    Alert.alert('Thông báo', 'Thành công');
+  };
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <SafeAreaView style={styles.viewAll}>
+      <Text style={styles.title}>Đăng Ký</Text>
+      <View style={styles.input}>
+        <Image source={require('./src/anh1.png')} style={styles.image} />
+        <TextInput
+          placeholder="Email hoặc số điện thoại"
+          value={emailOrPhone}
+          onChangeText={setEmailOrPhone}
+        />
+      </View>
+      <View style={styles.input}>
+        <Image source={require('./src/Key.png')} style={styles.image} />
+        <TextInput
+          placeholder="Mật khẩu"
+          secureTextEntry={!showPassword}
+          value={password}
+          onChangeText={setPassword}
+        />
+        <TouchableOpacity style={styles.lastImage} onPress={toggleShowPassword}>
+          <Image source={require('./src/See.png')} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.input}>
+        <Image source={require('./src/Key.png')} style={styles.image} />
+        <TextInput
+          placeholder="Nhập lại mật khẩu"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+        />
+      </View>
+      <View style={styles.viewVerificationCode}>
+        <View style={styles.VerificationCode}>
+          <TextInput
+            placeholder="Nhập mã xác minh"
+            value={verificationCode}
+            onChangeText={setVerificationCode}
+            keyboardType= 'numeric'
+            maxLength={4}
+          />
         </View>
-      </ScrollView>
+        <Text style={styles.text}>Gửi lại</Text>
+      </View>
+      <View>
+        <TouchableOpacity style={styles.button} onPress={handleRegister}>
+          <Text style={styles.buttonText}>Đăng ký</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.viewText}>
+        <Text>
+          Tôi đã có tài khoản?
+          <Text style={styles.lettersInside}>Đăng nhập</Text>
+        </Text>
+      </View>
+      <View style={styles.viewNote}>
+        <Text style={styles.note}>Lưu ý</Text>
+      </View>
+      <Text style={styles.footerText}>
+        Khi bạn nhấn vào đăng ký là bạn đã chấp thuận
+        <Text style={styles.lettersInside}> chính sách bảo mật </Text>
+        của chúng tôi
+      </Text>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  viewAll: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    height: '100%',
+    paddingHorizontal: 38,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  title: {
+    marginTop: 90,
+    color: '#FFC300',
+    fontSize: 28,
+    fontWeight: 'bold',
   },
-  sectionDescription: {
-    marginTop: 8,
+  input: {
+    flexDirection: 'row',
+    marginTop: 47,
+    height: 53,
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: '#F6F6F6',
+    borderRadius: 20,
+  },
+  image: {
+    margin: 10,
+  },
+  lastImage: {
+    position: 'absolute',
+    right: 10,
+    margin: 10,
+  },
+  viewVerificationCode: {
+    flexDirection: 'row',
+    marginTop: 27,
+    width: '100%',
+  },
+  VerificationCode: {
+    alignItems: 'center',
+    height: 40,
+    width: '80%',
+    paddingHorizontal: 10,
+    backgroundColor: '#F6F6F6',
+    borderRadius: 20,
+  },
+  text: {
+    margin: 10,
+    width: '20%',
+    color: '#FFC300',
+  },
+  button: {
+    marginTop: 30,
+    backgroundColor: '#FFC300',
+    padding: 10,
+    borderRadius: 20,
+    width: 280,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'white',
+  },
+  viewText: {
+    marginTop: 27,
+  },
+  lettersInside: {
+    marginTop: 18,
+    fontWeight: 'bold',
+    color: '#FFC300',
+  },
+  viewNote: {
+    marginTop: 35,
+    width: '100%',
+  },
+  note: {
+    fontWeight: 'bold',
     fontSize: 18,
-    fontWeight: '400',
+    textAlign: 'left',
   },
-  highlight: {
-    fontWeight: '700',
+  footerText: {
+    marginTop: 22,
+    fontSize: 11,
+    width: '100%',
   },
 });
 
