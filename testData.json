@@ -1,0 +1,28 @@
+{
+    "messageList": [
+      {
+        "id": 0,
+        "text": "Bộ sản phẩm sạc nhanh Bagi PD20W Type-C",
+        "avatar": "DaiDien.png",
+        "role": "you"
+      },
+      {
+        "id": 1,
+        "text": "Bộ sản phẩm sạc nhanh Bagi PD20W Type-C",
+        "avatar": "DaiDien.png",
+        "role": "me"
+      },
+      {
+        "id": 2,
+        "text": "Nguyen linh ntt 1905",
+        "avatar": "DaiDien.png",
+        "role": "you"
+      },
+      {
+        "id": 3,
+        "text": "Bộ sản phẩm sạc nhanh Bagi PD20W Type-C",
+        "avatar": "DaiDien.png",
+        "role": "me"
+      }
+    ]
+  }
